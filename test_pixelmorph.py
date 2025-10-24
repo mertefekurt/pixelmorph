@@ -2,16 +2,21 @@
 Basic tests for PixelMorph application.
 Tests core functionality and image processing algorithms.
 """
-import unittest
-import tempfile
 import os
-from PIL import Image
-import numpy as np
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QPixmap
+import tempfile
+import unittest
 
-from image_processor import process_image, _sort_pixels_vertically, _sort_pixels_horizontally
+import numpy as np
+from PIL import Image
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication
+
 from image_loader import load_image
+from image_processor import (
+    process_image, 
+    _sort_pixels_vertically, 
+    _sort_pixels_horizontally
+)
 from image_saver import save_image
 
 

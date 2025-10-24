@@ -5,9 +5,11 @@ Provides the main application window with enhanced user interface.
 from typing import Optional
 from PyQt5.QtCore import Qt, QPropertyAnimation, QThread, pyqtSignal
 from PyQt5.QtGui import QFont, QPixmap
-from PyQt5.QtWidgets import (QMainWindow, QVBoxLayout, QHBoxLayout, QPushButton, 
-                           QLabel, QWidget, QGraphicsOpacityEffect, QComboBox, 
-                           QProgressBar, QMessageBox)
+from PyQt5.QtWidgets import (
+    QMainWindow, QVBoxLayout, QHBoxLayout, QPushButton, 
+    QLabel, QWidget, QGraphicsOpacityEffect, QComboBox, 
+    QProgressBar, QMessageBox
+)
 
 from animations import create_fade_in_animation
 from image_loader import load_image
