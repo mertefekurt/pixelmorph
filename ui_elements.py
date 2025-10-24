@@ -161,8 +161,9 @@ class PixelMorphApp(QMainWindow):
         self.central_widget.setLayout(main_layout)
 
     def _setup_animations(self) -> None:
-        """Setup animation effects."""
-        self.opacity_effect = QGraphicsOpacityEffect()
+        """Initialize animations and effects."""
+        self.opacity_effect = QGraphicsOpacityEffect(self.image_label)
+        self.opacity_effect.setOpacity(1.0)
         self.image_label.setGraphicsEffect(self.opacity_effect)
 
     def _initialize_state(self) -> None:
@@ -290,11 +291,9 @@ class PixelMorphApp(QMainWindow):
             }}
             QPushButton:hover {{
                 background-color: {hover_color};
-                transform: translateY(-2px);
             }}
             QPushButton:pressed {{
                 background-color: {hover_color};
-                transform: translateY(0px);
             }}
             QPushButton:disabled {{
                 background-color: #bdc3c7;
