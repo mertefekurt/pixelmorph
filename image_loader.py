@@ -22,7 +22,7 @@ def load_image(parent_widget: QWidget) -> Tuple[Optional[str], Optional[QPixmap]
         parent_widget, 
         "Select Image", 
         "", 
-        "Image Files (*.png *.jpg *.jpeg *.bmp *.gif)"
+        "Image Files (*.png *.jpg *.jpeg *.bmp *.gif *.tiff *.webp)"
     )
 
     if file_path:

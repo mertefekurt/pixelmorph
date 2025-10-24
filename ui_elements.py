@@ -8,7 +8,7 @@ from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtWidgets import (
     QMainWindow, QVBoxLayout, QHBoxLayout, QPushButton, 
     QLabel, QWidget, QGraphicsOpacityEffect, QComboBox, 
-    QProgressBar, QMessageBox
+    QProgressBar, QMessageBox, QSizePolicy
 )
 
 from animations import create_fade_in_animation
@@ -82,11 +82,17 @@ class PixelMorphApp(QMainWindow):
         self.image_label = QLabel(self)
         self.image_label.setAlignment(Qt.AlignCenter)
         self.image_label.setMinimumHeight(400)
+        self.image_label.setMinimumWidth(600)
+        self.image_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.image_label.setStyleSheet("""
-            border: 2px dashed #bdc3c7;
-            border-radius: 10px;
-            background-color: white;
-            margin: 10px;
+            QLabel {
+                border: 2px dashed #bdc3c7;
+                border-radius: 10px;
+                background-color: white;
+                margin: 10px;
+                color: #7f8c8d;
+                font-size: 14px;
+            }
         """)
         self.image_label.setText("No image loaded")
 
@@ -171,9 +177,9 @@ class PixelMorphApp(QMainWindow):
         
         if loaded_image and not loaded_image.isNull():
             self.current_image = loaded_image
+            self.image_label.setText("")  # Clear the "No image loaded" text first
             self._display_image(loaded_image)
             self.sort_button.setEnabled(True)
-            self.image_label.setText("")
             
             # Animate image appearance
             fade_animation = create_fade_in_animation(self.image_label, 800)
@@ -225,16 +231,16 @@ class PixelMorphApp(QMainWindow):
     def _display_image(self, image: QPixmap) -> None:
         """Display image in the label with proper scaling."""
         if image and not image.isNull():
-            # Get the available size for the image label
+            # Clear any existing text
+            self.image_label.clear()
+            
+            # Get the current size of the image label
             label_size = self.image_label.size()
             
-            # If label size is not valid yet, use a reasonable default
-            if label_size.width() <= 0 or label_size.height() <= 0:
-                label_size = self.image_label.sizeHint()
-                if label_size.width() <= 0 or label_size.height() <= 0:
-                    # Use a default size based on minimum height
-                    label_size.setWidth(600)
-                    label_size.setHeight(400)
+            # If the label hasn't been properly sized yet, use minimum dimensions
+            if label_size.width() <= 100 or label_size.height() <= 100:
+                label_size.setWidth(600)
+                label_size.setHeight(400)
             
             # Scale the image to fit within the label while maintaining aspect ratio
             scaled_image = image.scaled(
@@ -242,8 +248,13 @@ class PixelMorphApp(QMainWindow):
                 Qt.KeepAspectRatio, 
                 Qt.SmoothTransformation
             )
+            
+            # Set the pixmap and ensure it's displayed
             self.image_label.setPixmap(scaled_image)
             self.image_label.setScaledContents(False)
+            
+            # Update the widget to ensure it redraws
+            self.image_label.update()
 
     def _set_processing_state(self, processing: bool) -> None:
         """Update UI state during processing."""
@@ -254,6 +265,12 @@ class PixelMorphApp(QMainWindow):
         
         if processing:
             self.progress_bar.setValue(0)
+
+    def resizeEvent(self, event) -> None:
+        """Ensure image preview scales with window resize."""
+        super().resizeEvent(event)
+        if self.current_image and not self.current_image.isNull():
+            self._display_image(self.current_image)
 
     def _create_button(self, text: str, base_color: str, hover_color: str, 
                       callback) -> QPushButton:
