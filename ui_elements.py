@@ -171,6 +171,7 @@ class PixelMorphApp(QMainWindow):
         self.image_path: Optional[str] = None
         self.current_image: Optional[QPixmap] = None
         self.processing_thread: Optional[ImageProcessingThread] = None
+        self._fade_in_anim: Optional[QPropertyAnimation] = None
 
     def load_image(self) -> None:
         """Load image from file dialog."""
@@ -182,9 +183,12 @@ class PixelMorphApp(QMainWindow):
             self._display_image(loaded_image)
             self.sort_button.setEnabled(True)
             
-            # Animate image appearance
-            fade_animation = create_fade_in_animation(self.image_label, 800)
-            fade_animation.start()
+            # Animate image appearance (persist reference to avoid GC)
+            if self._fade_in_anim:
+                self._fade_in_anim.stop()
+            self._fade_in_anim = create_fade_in_animation(self.image_label, 800)
+            self._fade_in_anim.finished.connect(lambda: self.opacity_effect.setOpacity(1.0))
+            self._fade_in_anim.start()
         else:
             self._show_message("Error", "Failed to load image. Please try another file.", QMessageBox.Warning)
 
