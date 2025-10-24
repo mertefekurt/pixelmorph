@@ -225,12 +225,25 @@ class PixelMorphApp(QMainWindow):
     def _display_image(self, image: QPixmap) -> None:
         """Display image in the label with proper scaling."""
         if image and not image.isNull():
+            # Get the available size for the image label
+            label_size = self.image_label.size()
+            
+            # If label size is not valid yet, use a reasonable default
+            if label_size.width() <= 0 or label_size.height() <= 0:
+                label_size = self.image_label.sizeHint()
+                if label_size.width() <= 0 or label_size.height() <= 0:
+                    # Use a default size based on minimum height
+                    label_size.setWidth(600)
+                    label_size.setHeight(400)
+            
+            # Scale the image to fit within the label while maintaining aspect ratio
             scaled_image = image.scaled(
-                self.image_label.size(), 
+                label_size, 
                 Qt.KeepAspectRatio, 
                 Qt.SmoothTransformation
             )
             self.image_label.setPixmap(scaled_image)
+            self.image_label.setScaledContents(False)
 
     def _set_processing_state(self, processing: bool) -> None:
         """Update UI state during processing."""
