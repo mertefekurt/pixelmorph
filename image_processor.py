@@ -43,7 +43,7 @@ def process_image(image_path: str, sort_method: str = "vertical") -> Optional[QI
 
 def _sort_pixels_vertically(pixels: np.ndarray) -> np.ndarray:
     """Sort pixels vertically by brightness within each column."""
-    height, width, channels = pixels.shape
+    width = pixels.shape[1]
     sorted_pixels = pixels.copy()
 
     for x in range(width):
@@ -57,7 +57,7 @@ def _sort_pixels_vertically(pixels: np.ndarray) -> np.ndarray:
 
 def _sort_pixels_horizontally(pixels: np.ndarray) -> np.ndarray:
     """Sort pixels horizontally by brightness within each row."""
-    height, width, channels = pixels.shape
+    height = pixels.shape[0]
     sorted_pixels = pixels.copy()
 
     for y in range(height):

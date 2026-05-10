@@ -2,7 +2,6 @@
 Animation utilities for PixelMorph application.
 Provides smooth UI animations using PyQt5 property animations.
 """
-from typing import Optional
 from PyQt5.QtCore import QPropertyAnimation, QEasingCurve, QPoint, QRect
 from PyQt5.QtWidgets import QWidget, QGraphicsOpacityEffect
 
