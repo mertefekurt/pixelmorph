@@ -17,8 +17,7 @@ def load_image(parent_widget: QWidget) -> Tuple[Optional[str], Optional[QPixmap]
     Returns:
         Tuple containing file path and QPixmap object, or (None, None) if cancelled
     """
-    file_dialog = QFileDialog(parent_widget)
-    file_path, _ = file_dialog.getOpenFileName(
+    file_path, _ = QFileDialog.getOpenFileName(
         parent_widget, 
         "Select Image", 
         "", 

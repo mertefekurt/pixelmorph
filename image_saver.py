@@ -22,8 +22,7 @@ def save_image(image: Optional[QPixmap], parent_widget: QWidget) -> bool:
         _show_error_message(parent_widget, "No image to save")
         return False
 
-    file_dialog = QFileDialog(parent_widget)
-    save_path, selected_filter = file_dialog.getSaveFileName(
+    save_path, selected_filter = QFileDialog.getSaveFileName(
         parent_widget, 
         "Save Image", 
         "", 
@@ -32,7 +31,6 @@ def save_image(image: Optional[QPixmap], parent_widget: QWidget) -> bool:
 
     if save_path:
         try:
-            # Determine format from selected filter or file extension
             image_format = _determine_format(save_path, selected_filter)
             success = image.save(save_path, image_format)
             
@@ -54,12 +52,11 @@ def _determine_format(file_path: str, selected_filter: str) -> str:
     """Determine image format from file path or selected filter."""
     if "PNG" in selected_filter or file_path.lower().endswith('.png'):
         return "PNG"
-    elif "JPEG" in selected_filter or file_path.lower().endswith(('.jpg', '.jpeg')):
+    if "JPEG" in selected_filter or file_path.lower().endswith(('.jpg', '.jpeg')):
         return "JPEG"
-    elif "BMP" in selected_filter or file_path.lower().endswith('.bmp'):
+    if "BMP" in selected_filter or file_path.lower().endswith('.bmp'):
         return "BMP"
-    else:
-        return "PNG"  # Default format
+    return "PNG"
 
 
 def _show_success_message(parent: QWidget, message: str) -> None:
