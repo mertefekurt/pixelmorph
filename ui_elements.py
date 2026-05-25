@@ -2,7 +2,7 @@
 UI elements for PixelMorph application.
 Provides the main application window with enhanced user interface.
 """
-from typing import Optional
+from typing import Callable, Optional
 from PyQt5.QtCore import Qt, QPropertyAnimation, QThread, pyqtSignal
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtWidgets import (
@@ -27,7 +27,7 @@ class ImageProcessingThread(QThread):
         self.image_path = image_path
         self.sort_method = sort_method
     
-    def run(self):
+    def run(self) -> None:
         """Process image in background thread."""
         self.progress.emit(25)
         processed_image = process_image(self.image_path, self.sort_method)
@@ -214,7 +214,7 @@ class PixelMorphApp(QMainWindow):
         self.processing_thread.finished.connect(self._on_processing_finished)
         self.processing_thread.start()
 
-    def _on_processing_finished(self, processed_image) -> None:
+    def _on_processing_finished(self, processed_image: object) -> None:
         """Handle completion of image processing."""
         self._set_processing_state(False)
         
@@ -277,8 +277,8 @@ class PixelMorphApp(QMainWindow):
         if self.current_image and not self.current_image.isNull():
             self._display_image(self.current_image)
 
-    def _create_button(self, text: str, base_color: str, hover_color: str, 
-                      callback) -> QPushButton:
+    def _create_button(self, text: str, base_color: str, hover_color: str,
+                       callback: Callable[[], None]) -> QPushButton:
         """Create styled button with hover effects."""
         button = QPushButton(text, self)
         button.clicked.connect(callback)
