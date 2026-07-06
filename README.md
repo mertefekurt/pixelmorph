@@ -2,26 +2,33 @@
 
 ![PixelMorph cover](assets/readme-cover.svg)
 
-PyQt5 desktop image tool for pixel sorting. It loads an image, sorts pixels vertically, horizontally, or by global brightness, and saves the transformed result.
+Pixel sorting effects in a PyQt desktop app.
 
-## Run
+## Flow
+
+![Workflow diagram](assets/readme-diagram.svg)
+
+## Run it locally
 
 ```bash
 git clone https://github.com/mertefekurt/pixelmorph.git
 cd pixelmorph
-python -m venv .venv
-source .venv/bin/activate
 python -m pip install -r requirements.txt
 python main.py
 ```
 
-## File tour
+## Useful edges
+
+- Designed as a focused developer tool repo.
+- Keeps setup short.
+- Prioritizes readable output over infrastructure.
+
+## File path
 
 ```text
-main.py             app entry
-ui_elements.py      window and controls
-image_processor.py  sorting algorithms
-image_loader.py     input flow
-image_saver.py      output flow
-animations.py       interface motion helpers
+animations.py       project file
+image_loader.py     project file
+image_processor.py  project file
+image_saver.py      project file
+main.py             application entry
 ```
