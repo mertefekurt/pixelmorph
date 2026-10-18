@@ -1,14 +1,12 @@
-# PixelMorph
+# Pixelmorph
 
-![PixelMorph cover](assets/readme-cover.svg)
+![Pixelmorph cover](assets/readme-cover.svg)
 
-Pixel sorting effects in a PyQt desktop app.
+A focused Python project from Mert Efe Kurt.
 
-## Flow
+`Python`
 
-![Workflow diagram](assets/readme-diagram.svg)
-
-## Run it locally
+## Start here
 
 ```bash
 git clone https://github.com/mertefekurt/pixelmorph.git
@@ -17,13 +15,7 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-## Useful edges
-
-- Designed as a focused developer tool repo.
-- Keeps setup short.
-- Prioritizes readable output over infrastructure.
-
-## File path
+## Project map
 
 ```text
 animations.py       project file
@@ -32,3 +24,7 @@ image_processor.py  project file
 image_saver.py      project file
 main.py             application entry
 ```
+
+## Repository
+
+[Open the source on GitHub →](https://github.com/mertefekurt/pixelmorph)
